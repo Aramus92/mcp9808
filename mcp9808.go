@@ -58,5 +58,9 @@ func Read(address uint8) (float32, error) {
 	if err != nil {
 		return 0, err
 	}
-	return float32(t&0x0FFF) / float32(16), nil
+	tc := float32(t&0x0FFF) / float32(16)
+	if int(tc)&0x1000 == 1 {
+		tc -= 256.0
+	}
+	return tc, nil
 }
